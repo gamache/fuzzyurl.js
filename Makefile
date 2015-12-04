@@ -2,8 +2,11 @@ all: test
 
 FORCE:
 
-test: lib FORCE
+test: npm lib FORCE
 	mocha
+
+npm: package.json
+	npm install
 
 lib: src
 	mkdir -p lib
