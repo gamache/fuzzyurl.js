@@ -1,3 +1,5 @@
+'use strict';
+
 const portsByProtocol = {
   ssh: "22",
   http: "80",

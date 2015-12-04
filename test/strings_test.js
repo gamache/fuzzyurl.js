@@ -1,7 +1,7 @@
 'use strict';
 
 let assert = require('assert');
-let Fuzzyurl = require('../lib/fuzzyurl');
+let Fuzzyurl = require('../src/fuzzyurl');
 
 describe('Fuzzyurl.Strings', () => {
   describe('fromString', () => {

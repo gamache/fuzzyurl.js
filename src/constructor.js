@@ -1,5 +1,16 @@
-const FIELDS = ["protocol", "username", "password", "hostname",
-                "port", "path", "query", "fragment"];
+'use strict';
+
+const defaultFuzzyurl = {
+  protocol: null,
+  username: null,
+  password: null,
+  hostname: null,
+  port: null,
+  path: null,
+  query: null,
+  fragment: null
+};
+const fields = Object.keys(defaultFuzzyurl);
 
 /**
  * Creates a Fuzzyurl object with the given parameter values.  Valid
@@ -10,12 +21,17 @@ const FIELDS = ["protocol", "username", "password", "hostname",
  *
  */
 function Fuzzyurl(params) {
-  FIELDS.forEach((f) => this[f] = null); // initialize
-  let ps = params ? params : {};
-  Object.keys(ps).forEach((k) => {
-    if (-1 === FIELDS.indexOf(k)) throw new Error(`Got bad field ${k}.`);
-    this[k] = ps[k];
-  });
+  let ps = Object.assign({}, defaultFuzzyurl, params || {});
+  for (var p in ps) {
+    if (defaultFuzzyurl.hasOwnProperty(p)) this[p] = ps[p];
+    else throw new Error(`Bad Fuzzyurl parameter: ${p}`);
+  }
+};
+
+Fuzzyurl.prototype.equals = function (fu) {
+  var equal = true;
+  fields.forEach((f) => { if (this[f] != fu[f]) equal = false; });
+  return equal;
 };
 
 module.exports = Fuzzyurl;

@@ -1,3 +1,5 @@
+'use strict';
+
 let Protocols = require('./protocols');
 
 /**
@@ -39,6 +41,9 @@ function matches(mask, url) {
  * @returns {Fuzzyurl} Fuzzyurl-like object containing match scores
  */
 function matchScores(mask, url) {
+  if ("object" !== typeof mask) throw new Error('mask must be a Fuzzyurl object');
+  if ("object" !== typeof url) throw new Error('url must be a Fuzzyurl object');
+
   // infer protocol from port, and vice versa
   let urlProtocol = url.protocol || Protocols.getProtocol(url.port);
   let urlPort = url.port || Protocols.getPort(url.protocol);
@@ -125,12 +130,20 @@ function strReverse(str) {
  * @returns {Fuzzyurl|null} Best matching mask, or null if none match.
  */
 function bestMatch(masks, url) {
-  masks
-    .map((mask) => ({mask: mask, score: match(mask, url)}))
-    .filter((pair) => pair.score !== null)
-    .sort((a, b) => a.score > b.score)
-    .first
-    .mask;
+  if ("object" !== typeof url) throw new Error(`url must be a Fuzzyurl object`);
+
+  var bestMask = null;
+  var bestScore = -1;
+  for (var i in masks) {
+    let m = masks[i];
+    if ("object" !== typeof m) throw new Error(`Got a non-Fuzzyurl mask: ${m}`);
+    let score = match(m, url);
+    if (score && score > bestScore) {
+      bestScore = score;
+      bestMask = m;
+    }
+  }
+  return bestMask;
 }
 
 module.exports = { match, matches, matchScores, fuzzyMatch, bestMatch };

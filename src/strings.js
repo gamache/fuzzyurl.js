@@ -1,3 +1,5 @@
+'use strict';
+
 let Fuzzyurl = require('./constructor');
 
 // This regex is a lot more readable in the Elixir and Ruby versions.

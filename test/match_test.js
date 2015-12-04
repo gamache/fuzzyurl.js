@@ -1,7 +1,7 @@
 'use strict';
 
 let assert = require('assert');
-let Fuzzyurl = require('../lib/fuzzyurl');
+let Fuzzyurl = require('../src/fuzzyurl');
 
 
 describe('Fuzzyurl.Match', () => {
@@ -83,7 +83,6 @@ describe('Fuzzyurl.Match', () => {
     });
   });
 
-
   describe('matches', () => {
     let matches = Fuzzyurl.Match.matches;
 
@@ -110,10 +109,16 @@ describe('Fuzzyurl.Match', () => {
     });
   });
 
+  describe('bestMatch', () => {
+    let bestMatch = Fuzzyurl.Match.bestMatch;
 
-
-
-
-
+    it('returns the best match', () => {
+      let best = Fuzzyurl.mask({hostname: "example.com", port: "8888"});
+      let mask = Fuzzyurl.mask();
+      let url = new Fuzzyurl({hostname: "example.com", port: "8888", protocol: "http"});
+      assert(best === bestMatch([best, mask], url));
+      assert(null === bestMatch([], url));
+    });
+  });
 
 });
