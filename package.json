@@ -19,6 +19,8 @@
   "dependencies": {},
   "devDependencies": {
     "mocha": "~> 2.3.4",
+    "mocha-lcov-reporter": "*",
+    "coveralls": "*",
     "babel-preset-es2015": "*"
   },
   "babel": {
