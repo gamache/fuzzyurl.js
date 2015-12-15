@@ -12,6 +12,7 @@ describe('Fuzzyurl.Protocols', () => {
       assert("22" === getPort("ssh"));
       assert("22" === getPort("git+ssh"));
       assert(null === getPort(null));
+      assert(null === getPort());
     });
   });
 
@@ -22,6 +23,7 @@ describe('Fuzzyurl.Protocols', () => {
       assert("http" === getProtocol("80"));
       assert("http" === getProtocol(80));
       assert(null === getProtocol(null));
+      assert(null === getProtocol());
     });
   });
 });

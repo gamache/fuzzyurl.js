@@ -44,7 +44,7 @@ wildcard if you wish to use the Fuzzyurl as a URL mask.
 
 Fuzzyurl supports wildcard matching:
 
-* `*` matches anything, including `nil`.
+* `*` matches anything, including `null`.
 * `foo*` matches `foo`, `foobar`, `foo/bar`, etc.
 * `*bar` matches `bar`, `foobar`, `foo/bar`, etc.
 
@@ -57,5 +57,32 @@ addition to the naive wildcard `*`:
    but not `/some/path`
 * `/some/path/**` matches `/some/path/foo/bar` and `/some/path/`
    and `/some/path`
+
+The `Fuzzyurl.mask` function aids in the creation of URL masks.
+
+    > Fuzzyurl.mask()
+    Fuzzyurl {
+      protocol: '*',
+      username: '*',
+      password: '*',
+      hostname: '*',
+      port: '*',
+      path: '*',
+      query: '*',
+      fragment: '*' }
+
+    > Fuzzyurl.matches(Fuzzyurl.mask(), "http://example.com:8080/foo/bar")
+    true
+
+    > var mask = Fuzzyurl.mask({path: "/a/b/**"})
+    > Fuzzyurl.matches(mask, "https://example.com/a/b/")
+    true
+    > Fuzzyurl.matches(mask, "git+ssh://jen@example.com/a/b")
+    true
+    > Fuzzyurl.matches(mask, "https://example.com/a/bar")
+    false
+
+`Fuzzyurl.bestMatch`, given a list of URL masks and a URL, will return
+the mask which most closely matches the URL:
 
 

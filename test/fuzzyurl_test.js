@@ -36,8 +36,23 @@ describe('Fuzzyurl', () => {
       assert(mask.equals(fu));
     });
 
-    it('returns correct mask when given args', () => {
+    it('returns correct mask when given object args', () => {
       let mask = Fuzzyurl.mask({hostname: "example.com", port: "80"});
+      let fu = new Fuzzyurl({
+        protocol: "*",
+        username: "*",
+        password: "*",
+        hostname: "example.com",
+        port: "80",
+        path: "*",
+        query: "*",
+        fragment: "*"
+      });
+      assert(mask.equals(fu));
+    });
+
+    it('returns correct mask when given string args', () => {
+      let mask = Fuzzyurl.mask("example.com:80");
       let fu = new Fuzzyurl({
         protocol: "*",
         username: "*",

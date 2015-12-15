@@ -20,6 +20,7 @@
   "devDependencies": {
     "mocha": "~> 2.3.4",
     "mocha-lcov-reporter": "*",
+    "chai": "*",
     "coveralls": "*",
     "babel-preset-es2015": "*"
   },
