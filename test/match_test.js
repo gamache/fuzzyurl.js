@@ -112,11 +112,11 @@ describe('Fuzzyurl.Match', () => {
   describe('bestMatch', () => {
     let bestMatch = Fuzzyurl.Match.bestMatch;
 
-    it('returns the best match', () => {
+    it('returns the best match index', () => {
       let best = Fuzzyurl.mask({hostname: "example.com", port: "8888"});
       let mask = Fuzzyurl.mask();
       let url = new Fuzzyurl({hostname: "example.com", port: "8888", protocol: "http"});
-      assert(best === bestMatch([best, mask], url));
+      assert(0 === bestMatch([best, mask], url));
       assert(null === bestMatch([], url));
     });
   });

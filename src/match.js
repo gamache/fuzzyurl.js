@@ -122,25 +122,25 @@ function strReverse(str) {
 
 
 /**
- * From a list of Fuzzyurl `masks`, returns the one which best matches `url`.
- * Returns null if none of `masks` match.
+ * From a list of Fuzzyurl `masks`, returns the index of the one which best
+ * matches `url`.  Returns null if none of `masks` match.
  *
  * @param {array} masks  Array of Fuzzyurl URL masks to match with.
  * @param {Fuzzyurl} url Fuzzyurl URL to match.
- * @returns {Fuzzyurl|null} Best matching mask, or null if none match.
+ * @returns {integer|null} Index of best matching mask, or null if none match.
  */
 function bestMatch(masks, url) {
   if ("object" !== typeof url) throw new Error(`url must be a Fuzzyurl object`);
 
   var bestMask = null;
   var bestScore = -1;
-  for (var i in masks) {
+  for (let i in masks) {
     let m = masks[i];
     if ("object" !== typeof m) throw new Error(`Got a non-Fuzzyurl mask: ${m}`);
     let score = match(m, url);
     if (score && score > bestScore) {
       bestScore = score;
-      bestMask = m;
+      bestMask = parseInt(i);
     }
   }
   return bestMask;

@@ -61,15 +61,8 @@ addition to the naive wildcard `*`:
 The `Fuzzyurl.mask` function aids in the creation of URL masks.
 
     > Fuzzyurl.mask()
-    Fuzzyurl {
-      protocol: '*',
-      username: '*',
-      password: '*',
-      hostname: '*',
-      port: '*',
-      path: '*',
-      query: '*',
-      fragment: '*' }
+    Fuzzyurl { protocol: '*', username: '*', password: '*', hostname: '*',
+      port: '*', path: '*', query: '*', fragment: '*' }
 
     > Fuzzyurl.matches(Fuzzyurl.mask(), "http://example.com:8080/foo/bar")
     true
@@ -83,6 +76,18 @@ The `Fuzzyurl.mask` function aids in the creation of URL masks.
     false
 
 `Fuzzyurl.bestMatch`, given a list of URL masks and a URL, will return
-the mask which most closely matches the URL:
+the index of the mask which most closely matches the URL:
+
+    > var masks = ["/foo/*", "/foo/bar", Fuzzyurl.mask()];
+    > Fuzzyurl.bestMatch(masks, "http://example.com/foo/bar");
+    0
 
 
+## Authorship and License
+
+Fuzzyurl is copyright 2015, Pete Gamache.
+
+Fuzzyurl is released under the MIT License.  See LICENSE.txt.
+
+If you got this far, you should probably follow me on Twitter.
+[@gamache](https://twitter.com/gamache)

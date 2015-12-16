@@ -29,7 +29,7 @@ function getPort(protocol) {
  * Given a port number (string or integer), returns the protocol string,
  * or null if not found.
  *
- * @param {string|integer|null} port
+ * @param {string|integer} port
  * @returns {string|null} protocol
  */
 function getProtocol(port) {
