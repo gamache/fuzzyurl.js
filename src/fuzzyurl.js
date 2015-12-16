@@ -10,7 +10,6 @@ const maskDefaults = {
   port: "*", path: "*", query: "*", fragment: "*"
 };
 Fuzzyurl.mask = function mask(params) {
-  var m = new Fuzzyurl(maskDefaults);
   var fu;
   if (typeof params == "string") {
     fu = Fuzzyurl.fromString(params);
@@ -25,6 +24,7 @@ Fuzzyurl.mask = function mask(params) {
     throw new Error("params must be string, object, or null");
   }
 
+  var m = new Fuzzyurl(maskDefaults);
   Object.keys(fu).forEach((k) => {
     if (fu[k]) m[k] = fu[k];
   });

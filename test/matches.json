@@ -1,4 +1,6 @@
 {
+  "version": "0.1.0",
+
   "positive_matches": [
     [
       "*",
@@ -121,6 +123,7 @@
       "svn+ssh://user:pass@example.com/some/path"
     ]
   ],
+
   "negative_matches": [
     [
       "http://*",
