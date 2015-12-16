@@ -19,6 +19,18 @@ fields, optionally replacing some or all of those fields with a `*`
 wildcard if you wish to use the Fuzzyurl as a URL mask.
 
 
+## Installation
+
+For Node.js projects, place the following in `package.json`'s
+`dependencies` object:
+
+    "fuzzyurl": "~> 0.1.0"
+
+For in-browser usage:
+
+    <script src="path/to/fuzzyurl.min.js"></script>
+
+
 ## Parsing URLs
 
     > Fuzzyurl.fromString("https://api.example.com/users/123?full=true")
