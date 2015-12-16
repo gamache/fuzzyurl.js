@@ -1,5 +1,8 @@
 # Fuzzyurl
 
+[![Build Status](https://travis-ci.org/gamache/fuzzyurl.js.svg?branch=master)](https://travis-ci.org/gamache/fuzzyurl.js)
+[![npm version](https://badge.fury.io/js/fuzzyurl.svg)](https://badge.fury.io/js/fuzzyurl)
+
 Non-strict parsing, composition, and wildcard matching of URLs in
 JavaScript.
 
