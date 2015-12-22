@@ -91,12 +91,17 @@ The `Fuzzyurl.mask` function aids in the creation of URL masks.
     false
 
 `Fuzzyurl.bestMatch`, given a list of URL masks and a URL, will return
-the index of the mask which most closely matches the URL:
+the given mask which most closely matches the URL:
 
     > var masks = ["/foo/*", "/foo/bar", Fuzzyurl.mask()];
     > Fuzzyurl.bestMatch(masks, "http://example.com/foo/bar");
-    0
+    "/foo/*"
 
+If you'd prefer the array index of the matching mask, use
+`Fuzzyurl.bestMatchIndex` instead:
+
+    > Fuzzyurl.bestMatchIndex(masks, "http://example.com/foo/bar");
+    0
 
 ## Authorship and License
 
