@@ -272,16 +272,9 @@ function bestMatchIndex(masks, url) {
   var bestScore = -1;
   for (var i in masks) {
     var m = masks[i];
-    //console.log("mask:")
-    //console.log(m);
-    //console.log("url:")
-    //console.log(url);
-    //console.log(matchScores(m, url));
-    //console.log('==============================================');
     if ("object" !== (typeof m === 'undefined' ? 'undefined' : _typeof(m))) throw new Error('Got a non-Fuzzyurl mask: ' + m);
     var score = match(m, url);
     if (score !== null && score > bestScore) {
-      //console.log(`new bestScore ${score} index ${i}`);
       bestScore = score;
       bestIndex = parseInt(i);
     }
