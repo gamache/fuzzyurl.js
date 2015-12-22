@@ -17,19 +17,19 @@ const regex = new RegExp(
   '$'
 );
 
-function fromString(str) {
+function fromString(str, default_value) {
   if (typeof str !== "string") return null;
   let m = regex.exec(str, regex);
   if (!m) return null;
   let fu = new Fuzzyurl({
-    protocol: m[1],
-    username: m[2],
-    password: m[3],
-    hostname: m[4],
-    port: m[5],
-    path: m[6],
-    query: m[7],
-    fragment: m[8]
+    protocol: m[1] || default_value,
+    username: m[2] || default_value,
+    password: m[3] || default_value,
+    hostname: m[4] || default_value,
+    port:     m[5] || default_value,
+    path:     m[6] || default_value,
+    query:    m[7] || default_value,
+    fragment: m[8] || default_value
   });
   return fu;
 }

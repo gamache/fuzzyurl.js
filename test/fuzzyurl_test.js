@@ -70,14 +70,14 @@ describe('Fuzzyurl', () => {
   describe('toString', () => {
     it('creates string from Fuzzyurl', () => {
       let fu = new Fuzzyurl({protocol: "http", hostname: "example.com", path: "/index.html"});
-      assert("http://example.com/index.html" === Fuzzyurl.toString(fu));
+      assert.equal("http://example.com/index.html", Fuzzyurl.toString(fu));
     });
   });
 
   describe('prototype.toString', () => {
     it('creates string from Fuzzyurl', () => {
       let fu = new Fuzzyurl({protocol: "http", hostname: "example.com", path: "/index.html"});
-      assert("http://example.com/index.html" === fu.toString());
+      assert.equal("http://example.com/index.html", fu.toString());
     });
   });
 
@@ -90,26 +90,33 @@ describe('Fuzzyurl', () => {
 
   describe('match', () => {
     it('is delegated', () => {
-      assert(0 === Fuzzyurl.match(Fuzzyurl.mask(), new Fuzzyurl()));
+      assert.equal(0, Fuzzyurl.match(Fuzzyurl.mask(), new Fuzzyurl()));
     });
   });
 
   describe('matches', () => {
     it('is delegated', () => {
-      assert(true === Fuzzyurl.matches(Fuzzyurl.mask(), new Fuzzyurl()));
+      assert.equal(true, Fuzzyurl.matches(Fuzzyurl.mask(), new Fuzzyurl()));
     });
   });
 
   describe('matchScores', () => {
     it('is delegated', () => {
-      assert("object" === typeof Fuzzyurl.matchScores(Fuzzyurl.mask(), new Fuzzyurl()));
+      assert.equal("object", typeof Fuzzyurl.matchScores(Fuzzyurl.mask(), new Fuzzyurl()));
+    });
+  });
+
+  describe('bestMatchIndex', () => {
+    it('is delegated', () => {
+      let masks = [ Fuzzyurl.mask(), "asdfasdf" ];
+      assert.equal(0, Fuzzyurl.bestMatchIndex(masks, new Fuzzyurl()));
     });
   });
 
   describe('bestMatch', () => {
-    it('is delegated', () => {
-      let masks = [ Fuzzyurl.mask() ];
-      assert("object" === typeof Fuzzyurl.bestMatch(masks, new Fuzzyurl()));
+    it('returns the given data, not intermediate Fuzzyurl objects', () => {
+      assert.equal("example.com/*", Fuzzyurl.bestMatch(
+        [Fuzzyurl.mask(), "example.com/*", "nope"], "http://example.com/omg/"));
     });
   });
 });

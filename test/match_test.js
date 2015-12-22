@@ -43,6 +43,17 @@ describe('Fuzzyurl.Match', () => {
     it("returns null for bad matches with no wildcards", () => {
       assert(null === fuzzyMatch("asdf", "oh no"));
     });
+
+    it("deals with the null-vs-undefined situation", () => {
+      assert.equal(0, fuzzyMatch("*", null));
+      assert.equal(0, fuzzyMatch("*", undefined));
+      assert.equal(1, fuzzyMatch(null, null));
+      assert.equal(1, fuzzyMatch(undefined, null));
+      assert.equal(1, fuzzyMatch(null, undefined));
+      assert.equal(1, fuzzyMatch(undefined, undefined));
+      assert.equal(null, fuzzyMatch(null, "anything"));
+      assert.equal(null, fuzzyMatch(undefined, "anything"));
+    });
   });
 
 
@@ -109,16 +120,17 @@ describe('Fuzzyurl.Match', () => {
     });
   });
 
-  describe('bestMatch', () => {
-    let bestMatch = Fuzzyurl.Match.bestMatch;
+  describe('bestMatchIndex', () => {
+    let bestMatchIndex = Fuzzyurl.Match.bestMatchIndex;
 
     it('returns the best match index', () => {
       let best = Fuzzyurl.mask({hostname: "example.com", port: "8888"});
       let mask = Fuzzyurl.mask();
       let url = new Fuzzyurl({hostname: "example.com", port: "8888", protocol: "http"});
-      assert(0 === bestMatch([best, mask], url));
-      assert(null === bestMatch([], url));
+      assert.equal(1, bestMatchIndex([mask, best], url));
+      assert.equal(null, bestMatchIndex([], url));
     });
   });
 
 });
+

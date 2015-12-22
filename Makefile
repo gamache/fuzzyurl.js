@@ -1,3 +1,7 @@
+BROWSERIFY=./node_modules/browserify/bin/cmd.js
+EXORCIST=./node_modules/exorcist/bin/exorcist.js
+UGLIFY=./node_modules/uglify-js/bin/uglifyjs
+
 all: test
 
 FORCE:
@@ -9,9 +13,8 @@ npm: package.json
 	npm install
 
 bundle: src
-	./node_modules/browserify/bin/cmd.js src/fuzzyurl.js -s Fuzzyurl -d \
-		-t [ babelify --presets [ es2015 ] ] | \
-		./node_modules/exorcist/bin/exorcist.js fuzzyurl.js.map > fuzzyurl.js && \
-	./node_modules/uglify-js/bin/uglifyjs --source-map fuzzyurl.min.js.map \
+	$(BROWSERIFY) src/fuzzyurl.js -s Fuzzyurl -d -t [ babelify --presets [ es2015 ] ] | \
+		$(EXORCIST) fuzzyurl.js.map > fuzzyurl.js && \
+	$(UGLIFY) --source-map fuzzyurl.min.js.map \
 	 	--in-source-map fuzzyurl.js.map fuzzyurl.js > fuzzyurl.min.js
 

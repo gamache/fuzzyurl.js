@@ -54,10 +54,11 @@ var maskDefaults = {
   protocol: "*", username: "*", password: "*", hostname: "*",
   port: "*", path: "*", query: "*", fragment: "*"
 };
-Fuzzyurl.mask = function mask(params) {
+
+function mask(params) {
   var fu;
   if (typeof params == "string") {
-    fu = Fuzzyurl.fromString(params);
+    fu = Fuzzyurl.fromString(params, "*");
   } else if (!params) {
     fu = {};
   } else if ((typeof params === "undefined" ? "undefined" : _typeof(params)) == "object") {
@@ -73,42 +74,56 @@ Fuzzyurl.mask = function mask(params) {
   return m;
 };
 
-Fuzzyurl.toString = function toString(fuzzyurl) {
+function toString(fuzzyurl) {
   return Strings.toString(fuzzyurl);
 };
 
-Fuzzyurl.prototype.toString = function () {
-  return Strings.toString(this);
-};
-
-Fuzzyurl.fromString = function fromString(string) {
+function fromString(string) {
   return Strings.fromString(string);
 };
 
-Fuzzyurl.match = function match(mask, url) {
-  var m = typeof mask === "string" ? Strings.fromString(mask) : mask;
+function match(mask, url) {
+  var m = typeof mask === "string" ? Strings.fromString(mask, "*") : mask;
   var u = typeof url === "string" ? Strings.fromString(url) : url;
   return Match.match(m, u);
 };
 
-Fuzzyurl.matches = function matches(mask, url) {
-  var m = typeof mask === "string" ? Strings.fromString(mask) : mask;
+function matches(mask, url) {
+  var m = typeof mask === "string" ? Strings.fromString(mask, "*") : mask;
   var u = typeof url === "string" ? Strings.fromString(url) : url;
   return Match.matches(m, u);
 };
 
-Fuzzyurl.matchScores = function matchScores(mask, url) {
-  var m = typeof mask === "string" ? Strings.fromString(mask) : mask;
+function matchScores(mask, url) {
+  var m = typeof mask === "string" ? Strings.fromString(mask, "*") : mask;
   var u = typeof url === "string" ? Strings.fromString(url) : url;
   return Match.matchScores(m, u);
 };
 
-Fuzzyurl.bestMatch = function bestMatch(masks, url) {
+function bestMatchIndex(masks, url) {
   var ms = masks.map(function (m) {
-    return typeof m === "string" ? Strings.fromString(m) : m;
+    return typeof m === "string" ? Strings.fromString(m, "*") : m;
   });
   var u = typeof url === "string" ? Strings.fromString(url) : url;
-  return Match.bestMatch(ms, u);
+  return Match.bestMatchIndex(ms, u);
+};
+
+function bestMatch(masks, url) {
+  var index = bestMatchIndex(masks, url);
+  if (index === null) return null;
+  return masks[index];
+};
+
+Fuzzyurl.match = match;
+Fuzzyurl.matches = matches;
+Fuzzyurl.matchScores = matchScores;
+Fuzzyurl.bestMatchIndex = bestMatchIndex;
+Fuzzyurl.bestMatch = bestMatch;
+Fuzzyurl.mask = mask;
+Fuzzyurl.fromString = fromString;
+Fuzzyurl.toString = toString;
+Fuzzyurl.prototype.toString = function () {
+  return Strings.toString(this);
 };
 
 module.exports = Fuzzyurl;
@@ -251,24 +266,30 @@ function strReverse(str) {
  * @param {Fuzzyurl} url Fuzzyurl URL to match.
  * @returns {integer|null} Index of best matching mask, or null if none match.
  */
-function bestMatch(masks, url) {
+function bestMatchIndex(masks, url) {
   if ("object" !== (typeof url === 'undefined' ? 'undefined' : _typeof(url))) throw new Error('url must be a Fuzzyurl object');
-
-  var bestMask = null;
+  var bestIndex = null;
   var bestScore = -1;
   for (var i in masks) {
     var m = masks[i];
+    //console.log("mask:")
+    //console.log(m);
+    //console.log("url:")
+    //console.log(url);
+    //console.log(matchScores(m, url));
+    //console.log('==============================================');
     if ("object" !== (typeof m === 'undefined' ? 'undefined' : _typeof(m))) throw new Error('Got a non-Fuzzyurl mask: ' + m);
     var score = match(m, url);
-    if (score && score > bestScore) {
+    if (score !== null && score > bestScore) {
+      //console.log(`new bestScore ${score} index ${i}`);
       bestScore = score;
-      bestMask = parseInt(i);
+      bestIndex = parseInt(i);
     }
   }
-  return bestMask;
+  return bestIndex;
 }
 
-module.exports = { match: match, matches: matches, matchScores: matchScores, fuzzyMatch: fuzzyMatch, bestMatch: bestMatch };
+module.exports = { match: match, matches: matches, matchScores: matchScores, fuzzyMatch: fuzzyMatch, bestMatchIndex: bestMatchIndex };
 
 },{"./protocols":4}],4:[function(require,module,exports){
 'use strict';
@@ -328,19 +349,19 @@ var regex = new RegExp('^' + '(?:(\\*|[a-zA-Z][A-Za-z+.-]+)://)?' + // m[1] is p
 '(?:\\#(.*))?' + // m[8] is fragment
 '$');
 
-function fromString(str) {
+function fromString(str, default_value) {
   if (typeof str !== "string") return null;
   var m = regex.exec(str, regex);
   if (!m) return null;
   var fu = new Fuzzyurl({
-    protocol: m[1],
-    username: m[2],
-    password: m[3],
-    hostname: m[4],
-    port: m[5],
-    path: m[6],
-    query: m[7],
-    fragment: m[8]
+    protocol: m[1] || default_value,
+    username: m[2] || default_value,
+    password: m[3] || default_value,
+    hostname: m[4] || default_value,
+    port: m[5] || default_value,
+    path: m[6] || default_value,
+    query: m[7] || default_value,
+    fragment: m[8] || default_value
   });
   return fu;
 }
