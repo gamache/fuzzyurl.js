@@ -2,11 +2,11 @@
 
 let assert = require('assert');
 let Fuzzyurl = require('../src/fuzzyurl');
+let Match = require('../src/match');
 
-
-describe('Fuzzyurl.Match', () => {
+describe('Match', () => {
   describe('fuzzyMatch', () => {
-    let fuzzyMatch = Fuzzyurl.Match.fuzzyMatch;
+    let fuzzyMatch = Match.fuzzyMatch;
 
     it('returns 0 for full wildcard', () => {
       assert(0 === fuzzyMatch("*", "lol"));
@@ -58,7 +58,7 @@ describe('Fuzzyurl.Match', () => {
 
 
   describe('match', () => {
-    let match = Fuzzyurl.Match.match;
+    let match = Match.match;
 
     it("returns 0 for full wildcard", () => {
       assert(0 === match(Fuzzyurl.mask(), new Fuzzyurl()));
@@ -95,7 +95,7 @@ describe('Fuzzyurl.Match', () => {
   });
 
   describe('matches', () => {
-    let matches = Fuzzyurl.Match.matches;
+    let matches = Match.matches;
 
     it('returns true on matches', () => {
       assert(true === matches(Fuzzyurl.mask(), new Fuzzyurl()));
@@ -108,7 +108,7 @@ describe('Fuzzyurl.Match', () => {
   });
 
   describe('matchScores', () => {
-    let matchScores = Fuzzyurl.Match.matchScores;
+    let matchScores = Match.matchScores;
 
     it('returns all zeroes for full wildcard', () => {
       let scores = matchScores(Fuzzyurl.mask(), new Fuzzyurl());
@@ -121,7 +121,7 @@ describe('Fuzzyurl.Match', () => {
   });
 
   describe('bestMatchIndex', () => {
-    let bestMatchIndex = Fuzzyurl.Match.bestMatchIndex;
+    let bestMatchIndex = Match.bestMatchIndex;
 
     it('returns the best match index', () => {
       let best = Fuzzyurl.mask({hostname: "example.com", port: "8888"});

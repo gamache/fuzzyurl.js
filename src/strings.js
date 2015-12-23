@@ -17,23 +17,40 @@ const regex = new RegExp(
   '$'
 );
 
-function fromString(str, default_value) {
+/**
+ * From a given string URL or URL mask, returns a Fuzzyurl object that
+ * represents it.  Option `default` specifies the Fuzzyurl's default field
+ * value; pass `default: "*"` to create a URL mask.
+ *
+ * @param {string} str The URL or URL mask to convert to a Fuzzyurl object.
+ * @returns {Fuzzyurl} Fuzzyurl representation of `str`.
+ */
+function fromString(str, options) {
+  let opts = options || {};
+  let defval = opts.default;
+
   if (typeof str !== "string") return null;
   let m = regex.exec(str, regex);
   if (!m) return null;
   let fu = new Fuzzyurl({
-    protocol: m[1] || default_value,
-    username: m[2] || default_value,
-    password: m[3] || default_value,
-    hostname: m[4] || default_value,
-    port:     m[5] || default_value,
-    path:     m[6] || default_value,
-    query:    m[7] || default_value,
-    fragment: m[8] || default_value
+    protocol: m[1] || defval,
+    username: m[2] || defval,
+    password: m[3] || defval,
+    hostname: m[4] || defval,
+    port:     m[5] || defval,
+    path:     m[6] || defval,
+    query:    m[7] || defval,
+    fragment: m[8] || defval
   });
   return fu;
 }
 
+/**
+ * Returns a string representation of the given Fuzzyurl object.
+ *
+ * @param {Fuzzyurl} fuzzyurl Fuzzyurl object to convert to string format.
+ * @returns {string} String representation of `fuzzyurl`.
+ */
 function toString(fuzzyurl) {
   var out = '', f = fuzzyurl;
   if (f.protocol) out += `${f.protocol}://`;

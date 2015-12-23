@@ -2,11 +2,12 @@
 
 let assert = require('assert');
 let Fuzzyurl = require('../src/fuzzyurl');
+let Protocols = require('../src/protocols');
 
-describe('Fuzzyurl.Protocols', () => {
+describe('Protocols', () => {
   describe('getPort', () => {
     it('gets port by protocol', () => {
-      let getPort = Fuzzyurl.Protocols.getPort;
+      let getPort = Protocols.getPort;
 
       assert("80" === getPort("http"));
       assert("22" === getPort("ssh"));
@@ -18,7 +19,7 @@ describe('Fuzzyurl.Protocols', () => {
 
   describe('getProtocol', () => {
     it('gets protocol by port', () => {
-      let getProtocol = Fuzzyurl.Protocols.getProtocol;
+      let getProtocol = Protocols.getProtocol;
 
       assert("http" === getProtocol("80"));
       assert("http" === getProtocol(80));

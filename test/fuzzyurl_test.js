@@ -106,6 +106,12 @@ describe('Fuzzyurl', () => {
     });
   });
 
+  describe('fuzzyMatch', () => {
+    it('is delegated', () => {
+      assert.equal(0, Fuzzyurl.fuzzyMatch("*", "ofelia"));
+    });
+  });
+
   describe('bestMatchIndex', () => {
     it('is delegated', () => {
       let masks = [ Fuzzyurl.mask(), "asdfasdf" ];

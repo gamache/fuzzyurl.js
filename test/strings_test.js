@@ -2,10 +2,11 @@
 
 let assert = require('assert');
 let Fuzzyurl = require('../src/fuzzyurl');
+let Strings = require('../src/strings');
 
-describe('Fuzzyurl.Strings', () => {
+describe('Strings', () => {
   describe('fromString', () => {
-    let fromString = Fuzzyurl.Strings.fromString;
+    let fromString = Strings.fromString;
 
     it('handles simple URLs', () => {
       assert(null !== fromString("http://example.com"));
@@ -33,7 +34,7 @@ describe('Fuzzyurl.Strings', () => {
   });
 
   describe('toString', () => {
-    let toString = Fuzzyurl.Strings.toString;
+    let toString = Strings.toString;
 
     it('handles simple URLs', () => {
       assert("example.com" === toString(new Fuzzyurl({hostname: "example.com"})));
