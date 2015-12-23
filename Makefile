@@ -12,9 +12,14 @@ test: npm bundle FORCE
 npm: package.json
 	npm install
 
-bundle: src
-	$(BROWSERIFY) src/fuzzyurl.js -s Fuzzyurl -d -t [ babelify --presets [ es2015 ] ] | \
-		$(EXORCIST) fuzzyurl.js.map > fuzzyurl.js && \
+bundle: src/ max min
+
+max:
+	$(BROWSERIFY) src/fuzzyurl.js -s Fuzzyurl -d \
+  	-t [ babelify --presets [ es2015 ] ] \
+	| $(EXORCIST) fuzzyurl.js.map > fuzzyurl.js
+
+min:
 	$(UGLIFY) --source-map fuzzyurl.min.js.map \
-	 	--in-source-map fuzzyurl.js.map fuzzyurl.js > fuzzyurl.min.js
+   	--in-source-map fuzzyurl.js.map fuzzyurl.js > fuzzyurl.min.js
 
