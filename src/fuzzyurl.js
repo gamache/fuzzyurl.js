@@ -56,6 +56,7 @@ Fuzzyurl.toString = function (fuzzyurl) {
  */
 Fuzzyurl.prototype.toString = function () { return Strings.toString(this); };
 
+
 /**
  * From a given string URL or URL mask, returns a Fuzzyurl object that
  * represents it.  Option `default` specifies the Fuzzyurl's default field

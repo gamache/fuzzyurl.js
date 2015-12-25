@@ -67,6 +67,33 @@ describe('Fuzzyurl', () => {
     });
   });
 
+  describe('prototype.with', () => {
+    it('creates separate, correct Fuzzyurl object with different params', () => {
+      let fu1 = new Fuzzyurl({
+        username: "lol",
+        path: "at you"
+      });
+      let fu2 = fu1.with({username: "shooting"});
+      assert.equal(fu1.username, "lol");
+      assert.equal(fu2.username, "shooting");
+      assert.equal(fu1.path, "at you");
+      assert.equal(fu2.path, "at you");
+    });
+
+    it('creates clone given null input', () => {
+      let fu1 = new Fuzzyurl({
+        username: "lol",
+        path: "at you"
+      });
+      let fu2 = fu1.with();
+      fu2.username = "shooting";
+      assert.equal(fu1.username, "lol");
+      assert.equal(fu2.username, "shooting");
+      assert.equal(fu1.path, "at you");
+      assert.equal(fu2.path, "at you");
+    });
+  });
+
   describe('toString', () => {
     it('creates string from Fuzzyurl', () => {
       let fu = new Fuzzyurl({protocol: "http", hostname: "example.com", path: "/index.html"});

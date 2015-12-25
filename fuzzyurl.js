@@ -38,6 +38,24 @@ Fuzzyurl.prototype.equals = function (fu) {
   return equal;
 };
 
+/**
+ * Returns a copy of this Fuzzyurl, with the given changes (if any).
+ * Does not mutate this Fuzzyurl object.
+ *
+ * @param {object|null} params Fuzzyurl keys and values to override.
+ * @returns {Fuzzyurl} Fuzzyurl based on this, with given overrides.
+ */
+Fuzzyurl.prototype.with = function (params) {
+  var _this2 = this;
+
+  var ps = params || {};
+  var f = new Fuzzyurl();
+  fields.forEach(function (field) {
+    if (ps.hasOwnProperty(field)) f[field] = ps[field];else f[field] = _this2[field];
+  });
+  return f;
+};
+
 module.exports = Fuzzyurl;
 
 },{}],2:[function(require,module,exports){
