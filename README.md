@@ -27,7 +27,7 @@ wildcard if you wish to use the Fuzzyurl as a URL mask.
 For Node.js projects, place the following in `package.json`'s
 `dependencies` object:
 
-    "fuzzyurl": "~> 0.1.2"
+    "fuzzyurl": "~> 0.8.0"
 
 For in-browser usage:
 
@@ -95,13 +95,13 @@ the given mask which most closely matches the URL:
 
     > var masks = ["/foo/*", "/foo/bar", Fuzzyurl.mask()];
     > Fuzzyurl.bestMatch(masks, "http://example.com/foo/bar");
-    "/foo/*"
+    "/foo/bar"
 
 If you'd prefer the array index of the matching mask, use
 `Fuzzyurl.bestMatchIndex` instead:
 
     > Fuzzyurl.bestMatchIndex(masks, "http://example.com/foo/bar");
-    0
+    1
 
 ## Authorship and License
 
