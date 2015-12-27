@@ -1,3 +1,5 @@
+/** @module fuzzyurl/match */
+
 'use strict';
 
 let Protocols = require('./protocols');

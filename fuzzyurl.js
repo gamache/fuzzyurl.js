@@ -1,5 +1,13 @@
 (function(f){if(typeof exports==="object"&&typeof module!=="undefined"){module.exports=f()}else if(typeof define==="function"&&define.amd){define([],f)}else{var g;if(typeof window!=="undefined"){g=window}else if(typeof global!=="undefined"){g=global}else if(typeof self!=="undefined"){g=self}else{g=this}g.Fuzzyurl = f()}})(function(){var define,module,exports;return (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
+/** @module fuzzyurl */
+
 'use strict';
+
+function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+
+var Strings = require("./strings");
+var Match = require("./match");
+var Protocols = require("./protocols");
 
 var defaultFuzzyurl = {
   protocol: null,
@@ -24,9 +32,10 @@ var fields = Object.keys(defaultFuzzyurl);
 function Fuzzyurl(params) {
   var ps = Object.assign({}, defaultFuzzyurl, params || {});
   for (var p in ps) {
-    if (defaultFuzzyurl.hasOwnProperty(p)) this[p] = ps[p];else throw new Error('Bad Fuzzyurl parameter: ' + p);
+    if (defaultFuzzyurl.hasOwnProperty(p)) this[p] = ps[p];else throw new Error("Bad Fuzzyurl parameter: " + p);
   }
 };
+module.exports = Fuzzyurl;
 
 Fuzzyurl.prototype.equals = function (fu) {
   var _this = this;
@@ -45,7 +54,7 @@ Fuzzyurl.prototype.equals = function (fu) {
  * @param {object|null} params Fuzzyurl keys and values to override.
  * @returns {Fuzzyurl} Fuzzyurl based on this, with given overrides.
  */
-Fuzzyurl.prototype.with = function (params) {
+module.exports.prototype.with = function (params) {
   var _this2 = this;
 
   var ps = params || {};
@@ -56,18 +65,6 @@ Fuzzyurl.prototype.with = function (params) {
   return f;
 };
 
-module.exports = Fuzzyurl;
-
-},{}],2:[function(require,module,exports){
-'use strict';
-
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
-
-var Fuzzyurl = require("./constructor");
-var Strings = require("./strings");
-var Match = require("./match");
-var Protocols = require("./protocols");
-
 /**
  * Returns a URL mask from the given string or object.  Unspecified URL
  * parts default to a wildcard, `*`.
@@ -75,7 +72,7 @@ var Protocols = require("./protocols");
  * @param {object|string|null} params Object or string to create mask from.
  * @returns {Fuzzyurl} Fuzzyurl mask object.
  */
-Fuzzyurl.mask = function (params) {
+module.exports.mask = function (params) {
   var fu;
   if (typeof params == "string") {
     fu = Fuzzyurl.fromString(params, { default: "*" });
@@ -104,7 +101,7 @@ var maskDefaults = {
  * @param {Fuzzyurl} fuzzyurl Fuzzyurl object to convert to string format.
  * @returns {string} String representation of `fuzzyurl`.
  */
-Fuzzyurl.toString = function (fuzzyurl) {
+module.exports.toString = function (fuzzyurl) {
   return Strings.toString(fuzzyurl);
 };
 
@@ -113,7 +110,7 @@ Fuzzyurl.toString = function (fuzzyurl) {
  *
  * @returns {string} String representation of `fuzzyurl`.
  */
-Fuzzyurl.prototype.toString = function () {
+module.exports.prototype.toString = function () {
   return Strings.toString(this);
 };
 
@@ -125,8 +122,8 @@ Fuzzyurl.prototype.toString = function () {
  * @param {string} str The URL or URL mask to convert to a Fuzzyurl object.
  * @returns {Fuzzyurl} Fuzzyurl representation of `str`.
  */
-Fuzzyurl.fromString = function (string) {
-  return Strings.fromString(string);
+module.exports.fromString = function (string) {
+  return new Fuzzyurl(Strings.fromString(string));
 };
 
 /**
@@ -141,7 +138,7 @@ Fuzzyurl.fromString = function (string) {
  * @returns {integer|null} total match score, or null if no match
  *
  */
-Fuzzyurl.match = function (mask, url) {
+module.exports.match = function (mask, url) {
   var m = typeof mask === "string" ? Strings.fromString(mask, { default: "*" }) : mask;
   var u = typeof url === "string" ? Strings.fromString(url) : url;
   return Match.match(m, u);
@@ -157,7 +154,7 @@ Fuzzyurl.match = function (mask, url) {
  * @param {Fuzzyurl|string} url   Fuzzyurl URL to match
  * @returns {boolean} true if mask matches url, false otherwise
  */
-Fuzzyurl.matches = function (mask, url) {
+module.exports.matches = function (mask, url) {
   var m = typeof mask === "string" ? Strings.fromString(mask, { default: "*" }) : mask;
   var u = typeof url === "string" ? Strings.fromString(url) : url;
   return Match.matches(m, u);
@@ -174,7 +171,7 @@ Fuzzyurl.matches = function (mask, url) {
  * @param {Fuzzyurl|string} url   Fuzzyurl URL to match
  * @returns {Fuzzyurl} Fuzzyurl-like object containing match scores
  */
-Fuzzyurl.matchScores = function (mask, url) {
+module.exports.matchScores = function (mask, url) {
   var m = typeof mask === "string" ? Strings.fromString(mask, { default: "*" }) : mask;
   var u = typeof url === "string" ? Strings.fromString(url) : url;
   return Match.matchScores(m, u);
@@ -199,7 +196,7 @@ Fuzzyurl.matchScores = function (mask, url) {
  * @param {string} value String value to match.
  * @returns {integer|null} 1 for perfect match, 0 for wildcard match, null otherwise.
  */
-Fuzzyurl.fuzzyMatch = function (mask, value) {
+module.exports.fuzzyMatch = function (mask, value) {
   return Match.fuzzyMatch(mask, value);
 };
 
@@ -214,7 +211,7 @@ Fuzzyurl.fuzzyMatch = function (mask, value) {
  * @param {Fuzzyurl} url Fuzzyurl URL to match.
  * @returns {integer|null} Index of best matching mask, or null if none match.
  */
-Fuzzyurl.bestMatchIndex = function (masks, url) {
+module.exports.bestMatchIndex = function (masks, url) {
   var ms = masks.map(function (m) {
     return typeof m === "string" ? Strings.fromString(m, { default: "*" }) : m;
   });
@@ -233,14 +230,14 @@ Fuzzyurl.bestMatchIndex = function (masks, url) {
  * @param {Fuzzyurl} url Fuzzyurl URL to match.
  * @returns {integer|null} Index of best matching mask, or null if none match.
  */
-Fuzzyurl.bestMatch = function (masks, url) {
+module.exports.bestMatch = function (masks, url) {
   var index = Fuzzyurl.bestMatchIndex(masks, url);
   return index && masks[index];
 };
 
-module.exports = Fuzzyurl;
+},{"./match":2,"./protocols":3,"./strings":4}],2:[function(require,module,exports){
+/** @module fuzzyurl/match */
 
-},{"./constructor":1,"./match":3,"./protocols":4,"./strings":5}],3:[function(require,module,exports){
 'use strict';
 
 function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
@@ -396,7 +393,9 @@ function bestMatchIndex(masks, url) {
 
 module.exports = { match: match, matches: matches, matchScores: matchScores, fuzzyMatch: fuzzyMatch, bestMatchIndex: bestMatchIndex };
 
-},{"./protocols":4}],4:[function(require,module,exports){
+},{"./protocols":3}],3:[function(require,module,exports){
+/** @module fuzzyurl/protocols */
+
 'use strict';
 
 var portsByProtocol = {
@@ -438,12 +437,13 @@ function getProtocol(port) {
 
 module.exports = { getPort: getPort, getProtocol: getProtocol };
 
-},{}],5:[function(require,module,exports){
-'use strict';
+},{}],4:[function(require,module,exports){
+/** @module fuzzyurl/strings */
 
-var Fuzzyurl = require('./constructor');
+'use strict'
 
 // This regex is a lot more readable in the Elixir and Ruby versions.
+;
 var regex = new RegExp('^' + '(?:(\\*|[a-zA-Z][A-Za-z+.-]+)://)?' + // m[1] is protocol
 '(?:(\\*|[a-zA-Z0-9%_.!~*\'();&=+$,-]+)' + // m[2] is username
 '(?::(\\*|[a-zA-Z0-9%_.!~*\'();&=+$,-]*))?' + // m[3] is password
@@ -455,12 +455,12 @@ var regex = new RegExp('^' + '(?:(\\*|[a-zA-Z][A-Za-z+.-]+)://)?' + // m[1] is p
 '$');
 
 /**
- * From a given string URL or URL mask, returns a Fuzzyurl object that
+ * From a given string URL or URL mask, returns a generic object that
  * represents it.  Option `default` specifies the Fuzzyurl's default field
  * value; pass `default: "*"` to create a URL mask.
  *
  * @param {string} str The URL or URL mask to convert to a Fuzzyurl object.
- * @returns {Fuzzyurl} Fuzzyurl representation of `str`.
+ * @returns {object} Object representation of `str`.
  */
 function fromString(str, options) {
   var opts = options || {};
@@ -469,7 +469,7 @@ function fromString(str, options) {
   if (typeof str !== "string") return null;
   var m = regex.exec(str, regex);
   if (!m) return null;
-  var fu = new Fuzzyurl({
+  return {
     protocol: m[1] || defval,
     username: m[2] || defval,
     password: m[3] || defval,
@@ -478,8 +478,7 @@ function fromString(str, options) {
     path: m[6] || defval,
     query: m[7] || defval,
     fragment: m[8] || defval
-  });
-  return fu;
+  };
 }
 
 /**
@@ -505,6 +504,6 @@ function toString(fuzzyurl) {
 
 module.exports = { fromString: fromString, toString: toString };
 
-},{"./constructor":1}]},{},[2])(2)
+},{}]},{},[1])(1)
 });
 //# sourceMappingURL=fuzzyurl.js.map

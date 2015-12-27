@@ -1,3 +1,5 @@
+/** @module fuzzyurl/protocols */
+
 'use strict';
 
 const portsByProtocol = {

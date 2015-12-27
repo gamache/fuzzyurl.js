@@ -1,16 +1,20 @@
 BROWSERIFY=./node_modules/browserify/bin/cmd.js
 EXORCIST=./node_modules/exorcist/bin/exorcist.js
 UGLIFY=./node_modules/uglify-js/bin/uglifyjs
+JSDOC=./node_modules/jsdoc/jsdoc.js
 
 all: test
 
 FORCE:
 
-test: npm bundle FORCE
+test: npm bundle doc FORCE
 	npm test
 
 npm: package.json
 	npm install
+
+doc: src/
+	$(JSDOC) src/fuzzyurl.js -t node_modules/minami
 
 bundle: src/ max min
 
