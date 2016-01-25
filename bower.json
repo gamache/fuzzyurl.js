@@ -1,0 +1,30 @@
+{
+  "name": "fuzzyurl",
+  "description": "A library for non-strict parsing, construction, and wildcard-matching of URLs.",
+  "main": "fuzzyurl.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gamache/fuzzyurl.js.git"
+  },
+  "author": "pete gamache <pete@gamache.org>",
+  "license": "MIT",
+  "homepage": "https://github.com/gamache/fuzzyurl.js",
+  "dependencies": {},
+  "devDependencies": {
+    "babel": "~> 6.0.0",
+    "babel-preset-es2015": "~> 6.1.18",
+    "babelify": "~> 7.2.0",
+    "browserify": "~> 12.0.1",
+    "chai": "~> 3.4.1",
+    "coveralls": "*",
+    "exorcist": "~> 0.4.0",
+    "minami": "*",
+    "mocha": "~> 2.3.4",
+    "mocha-lcov-reporter": "~> 1.0.0",
+    "uglify-js": "~> 2.6.1",
+    "jsdoc": "~> 3.4.0"
+  },
+  "authors": [
+    "pete gamache <pete@gamache.org>"
+  ]
+}
