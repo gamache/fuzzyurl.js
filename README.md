@@ -103,11 +103,21 @@ If you'd prefer the array index of the matching mask, use
     > Fuzzyurl.bestMatchIndex(masks, "http://example.com/foo/bar");
     1
 
+
+## Contributors
+
+Many thanks to the people who've sent pull requests and improved
+this code:
+
+* Spencer Davis ([@spencerdavis](https://github.com/spencerdavis))
+* Ray DiCiaccio ([@rayd](https://github.com/rayd))
+
+
 ## Authorship and License
 
-Fuzzyurl is copyright 2015, Pete Gamache.
+Fuzzyurl is copyright 2015-2016, Pete Gamache.
 
 Fuzzyurl is released under the MIT License.  See LICENSE.txt.
 
-If you got this far, you should probably follow me on Twitter.
+If you got this far, you should probably follow me on Twitter:
 [@gamache](https://twitter.com/gamache)
