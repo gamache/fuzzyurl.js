@@ -3,7 +3,9 @@
 
 'use strict';
 
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var Strings = require("./strings");
 var Match = require("./match");
@@ -30,7 +32,7 @@ var fields = Object.keys(defaultFuzzyurl);
  *
  */
 function Fuzzyurl(params) {
-  var ps = Object.assign({}, defaultFuzzyurl, params || {});
+  var ps = _extends({}, defaultFuzzyurl, params || {});
   for (var p in ps) {
     if (defaultFuzzyurl.hasOwnProperty(p)) this[p] = ps[p];else throw new Error("Bad Fuzzyurl parameter: " + p);
   }
@@ -240,7 +242,7 @@ module.exports.bestMatch = function (masks, url) {
 
 'use strict';
 
-function _typeof(obj) { return obj && typeof Symbol !== "undefined" && obj.constructor === Symbol ? "symbol" : typeof obj; }
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol ? "symbol" : typeof obj; };
 
 var Protocols = require('./protocols');
 
@@ -440,10 +442,10 @@ module.exports = { getPort: getPort, getProtocol: getProtocol };
 },{}],4:[function(require,module,exports){
 /** @module fuzzyurl/strings */
 
-'use strict'
+'use strict';
 
 // This regex is a lot more readable in the Elixir and Ruby versions.
-;
+
 var regex = new RegExp('^' + '(?:(\\*|[a-zA-Z][A-Za-z+.-]+)://)?' + // m[1] is protocol
 '(?:(\\*|[a-zA-Z0-9%_.!~*\'();&=+$,-]+)' + // m[2] is username
 '(?::(\\*|[a-zA-Z0-9%_.!~*\'();&=+$,-]*))?' + // m[3] is password
