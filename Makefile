@@ -20,7 +20,7 @@ bundle: src/ max min
 
 max:
 	$(BROWSERIFY) src/fuzzyurl.js -s Fuzzyurl -d \
-  	-t [ babelify --presets [ es2015 ] ] \
+	-t [ babelify --presets [ es2015 ] --plugins [ transform-object-assign ] ] \
 	| $(EXORCIST) fuzzyurl.js.map > fuzzyurl.js
 
 min:
