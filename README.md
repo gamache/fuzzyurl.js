@@ -27,7 +27,7 @@ wildcard if you wish to use the Fuzzyurl as a URL mask.
 For Node.js projects, place the following in `package.json`'s
 `dependencies` object:
 
-    "fuzzyurl": "~> 0.8.0"
+    "fuzzyurl": "~> 0.9.0"
 
 For in-browser usage:
 
